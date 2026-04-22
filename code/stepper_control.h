@@ -9,3 +9,4 @@ extern Stepper myStepper;
 
 void stepLeft();
 void stepRight();
+void stepHalfRevolution();

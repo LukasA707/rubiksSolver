@@ -13,3 +13,7 @@ void stepLeft() {
 void stepRight() {
   myStepper.step(-stepsPerRevolution / 4);
 }
+
+void stepHalfRevolution() {
+  myStepper.step(stepsPerRevolution / 2);
+}
