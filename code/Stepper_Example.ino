@@ -2,7 +2,7 @@
 
 const int leftReader = 2;
 const int rightReader = 3;
-const int stepsPerRevolution = 200; 
+const int stepsPerRevolution = 200; // value got from datasheet
 Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
 
 
