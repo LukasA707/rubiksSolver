@@ -1,4 +1,5 @@
-#include "stepper_control.h"
+#include "stepper.h"
+#include "servo.h"
 
 // Define command types
 enum Command {
@@ -29,7 +30,9 @@ void executeCommand(String command, void (*f)()) {
 
 void setup() {
   Serial.begin(9600);
-  myStepper.setSpeed(60);
+  initStepper();
+  //initSolenoid();
+  initServo();
   Serial.println("Ready for commands");
 }
 
@@ -53,6 +56,7 @@ void loop() {
       break;
 
     case CMD_PUSH:
+      executeCommand(command, servoPush);
       break;
 
     case CMD_NONE:

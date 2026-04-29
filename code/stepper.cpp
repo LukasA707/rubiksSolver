@@ -1,10 +1,12 @@
-#include "stepper_control.h"
+#include "stepper.h"
 
-const int leftReader = 2;
-const int rightReader = 3;
 const int stepsPerRevolution = 200;
 
 Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
+
+void initStepper() {
+  myStepper.setSpeed(60);
+}
 
 void stepLeft() {
   myStepper.step(stepsPerRevolution / 4);
