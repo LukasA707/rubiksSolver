@@ -25,9 +25,8 @@ Command parseCommand(String cmd) {
   // if (cmd == "spin_full") // Spins entire cube 180 deg
   // if (cmd == "turn_cw_half") // Turn bottom layer 90 deg clockwise
   // if (cmd == "turn_ccw__half") // Turns bottom layer 90 deg counter-clockwise
-  // if (cmd == "full_turn") // Turns bottom layer 180 deg
-  // if (cmd == "flip")
-
+  // if (cmd == "turn_full") // Turns bottom layer 180 deg
+  // if (cmd == "flip") // Flip cube
 
   return CMD_NONE;
 }
