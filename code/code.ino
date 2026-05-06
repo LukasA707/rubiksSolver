@@ -20,13 +20,15 @@ Command parseCommand(String cmd) {
   if (cmd == "half") return CMD_HALF;
 
   // COMMANDS NEEDED BY ALGORITHM (API)
+  // Note that clockwise means from the perspective of the bottom face,
+  // i.e. the opposite of what you would expect if you sit facing the front face of the cube
   // if (cmd == "spin_cw_half") // Spins entire cube 90 deg clockwise
   // if (cmd == "spin_ccw_half") // Spins entire cube 90 deg counter-clockwise
   // if (cmd == "spin_full") // Spins entire cube 180 deg
   // if (cmd == "turn_cw_half") // Turn bottom layer 90 deg clockwise
   // if (cmd == "turn_ccw__half") // Turns bottom layer 90 deg counter-clockwise
   // if (cmd == "turn_full") // Turns bottom layer 180 deg
-  // if (cmd == "flip") // Flip cube
+  // if (cmd == "flip") // Flip cube (front face becomes bottom face)
 
   return CMD_NONE;
 }
@@ -34,7 +36,7 @@ Command parseCommand(String cmd) {
 void executeCommand(String command, void (*f)()) {
   f();
   command.trim();
-  Serial.println(command + ": ok");
+  Serial.println(command + "_ok");
 }
 
 void setup() {
