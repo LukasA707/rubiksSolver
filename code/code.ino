@@ -19,6 +19,16 @@ Command parseCommand(String cmd) {
   if (cmd == "push") return CMD_PUSH;
   if (cmd == "half") return CMD_HALF;
 
+  // COMMANDS NEEDED BY ALGORITHM (API)
+  // if (cmd == "spin_cw_half") // Spins entire cube 90 deg clockwise
+  // if (cmd == "spin_ccw_half") // Spins entire cube 90 deg counter-clockwise
+  // if (cmd == "spin_full") // Spins entire cube 180 deg
+  // if (cmd == "turn_cw_half") // Turn bottom layer 90 deg clockwise
+  // if (cmd == "turn_ccw__half") // Turns bottom layer 90 deg counter-clockwise
+  // if (cmd == "full_turn") // Turns bottom layer 180 deg
+  // if (cmd == "flip")
+
+
   return CMD_NONE;
 }
 
