@@ -1,5 +1,5 @@
 import twophase.solver  as sv
-import cubotino_solver as cs
+import external_lib.cubotino_solver as cs
 import twophase.cubie as cubie
 import commands_enum as commands_enum 
 import serial
@@ -14,6 +14,7 @@ Command = commands_enum.Command
 SOLVE_TIMEOUT = 2 # how long to spend running the solve algorithm (seconds)
 SERIAL_PORT = ""
 SERIAL_BAUDRATE = 9600
+DEBUG = True # when debugging, we just write commands to console instead of connecting to arduino serial
 
 ## String representation of cube. Since we won't implement scanning, we just hardcode it here.
 ## See here for description of string representation: https://github.com/hkociemba/RubiksCube-TwophaseSolver
@@ -26,7 +27,8 @@ CUBE_STRING = "".join([
 "BLBLBBDRR"     ## BEHIND   GREEN
 ])
 
-ser = serial.Serial(port=SERIAL_PORT, baudrate=SERIAL_BAUDRATE)
+if not DEBUG:
+    ser = serial.Serial(port=SERIAL_PORT, baudrate=SERIAL_BAUDRATE)
 
 #######################################
 ## Demo on a randomly generated cube
@@ -82,15 +84,16 @@ def parse_cubotino_step(step):
         return [Command.FLIP for _ in range(num)]
     
 def send_command(cmd: str):
-    # print(f'sending to serial: {cmd}')
-    # return
-    ser.write(cmd.encode('utf-8'))
-    while True:
-        result = str(ser.readline())
-        if (result != f'{cmd}_ok'):
-            # possibly handle error from arduino?
-            pass
-        return
+    if DEBUG:
+        print(cmd)
+    else:
+        ser.write(cmd.encode('utf-8'))
+        while True:
+            result = str(ser.readline())
+            if (result != f'{cmd}_ok'):
+                # possibly handle error from arduino?
+                pass
+            return
 
 
 def parse_solution(solution_string):
@@ -122,6 +125,8 @@ if __name__ == "__main__":
     # print(revert_solution())
 
     for idx, step in enumerate(arduino_steps):
-        print(f'Running step {idx}')
+        if DEBUG:
+            print()
+            print(f'Running step {idx}')
         for movement in step:
             send_command(movement)
