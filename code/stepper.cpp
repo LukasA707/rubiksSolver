@@ -8,14 +8,9 @@ void initStepper() {
   myStepper.setSpeed(60);
 }
 
-void stepLeft() {
-  myStepper.step(stepsPerRevolution / 4);
-}
-
-void stepRight() {
-  myStepper.step(-stepsPerRevolution / 4);
-}
-
-void stepHalfRevolution() {
-  myStepper.step(stepsPerRevolution / 2);
+void stepperStep(int deg) {
+  // TODO: What happens if we try to step less than 1 (i.e. if we ask it to step 1 degree)
+  // We might want to do that if we have to do micro-adjustments
+  // If it breaks, the simplest solution might just be to take min here, so it steps at least 1 step no matter what is asked
+  myStepper.step(stepsPerRevolution / (360 / deg))
 }

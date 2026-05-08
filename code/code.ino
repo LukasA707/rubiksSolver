@@ -45,7 +45,6 @@ void setup() {
 }
 
 void loop() {
-  // For the first MVP we could add a blocker here, that blocks until some button is pressed, in case we need manual intervention?
   delay(100);
 
   while (Serial.available() == 0) {}
@@ -53,26 +52,55 @@ void loop() {
   String command = Serial.readString();
 
   switch(parseCommand(command)) {
-    // TODO: What is left / right in this context?
     case CMD_SPIN_CW:
-      executeCommand(command, stepRight);
+      executeCommand(command, spin_cw);
       break;
     case CMD_SPIN_CCW:
-      executeCommand(command, stepLeft);
+      executeCommand(command, spin_ccw);
       break;
     case CMD_SPIN_FULL:
-      executeCommand(command, stepHalfRevolution);
+      executeCommand(command, spin_full);
+      break;
     case CMD_TURN_CW:
+      executeCommand(command, turn_cw);
+      break;
     case CMD_TURN_CCW:
+      executeCommand(command, turn_ccw);
+      break;
     case CMD_TURN_FULL:
-      Serial.println("Command not implemented: " + command);
+      executeCommand(command, turn_full);
       break;
     case CMD_FLIP:    
-      executeCommand(command, servoPush);
+      executeCommand(command, flip);
       break;  
     case CMD_NONE:
     default:
       Serial.println("Invalid command: " + command);
       break;
   }
+}
+
+// We should do adjustments in these functions if our sensors indicate that the spin / turn / flip was not successful
+// For an MVP, we could also just block until some button is pressed (if sensors indicate error?), to allow for manual intervention 
+void spin_cw() {
+  stepperStep(90);
+}
+void spin_ccw() {
+  stepperStep(-90);
+}
+void spin_full() {
+  stepperStep(180);
+}
+// TODO: Clamp cube before stepping in all the turn functions
+void turn_cw() {
+  stepperStep(90);
+}
+void turn_ccw() {
+  stepperStep(-90);
+}
+void turn_full() {
+  stepperStep(180);
+}
+void flip() {
+  servoPush();
 }

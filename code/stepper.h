@@ -3,6 +3,4 @@
 #include <Stepper.h>
 
 void initStepper();
-void stepLeft();
-void stepRight();
-void stepHalfRevolution();
+void stepperStep(int deg);
