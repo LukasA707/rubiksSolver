@@ -36,8 +36,6 @@ if not DEBUG:
 # cube.randomize()
 # fc = cube.to_facelet_cube()
 # CUBE_STRING = fc.to_string()
-# cube_solution_1 = 'U2 L1 R1 D2 B2 R1 D2 B2 D2 L3 B3 R3 F2 D3 L1 U2 F2 D3 B3 D1' # cube solution that allows type 1 optimization
-# cube_solution_2 = 'U2 D2 R2 L2 F2 B2' # cube solution that allows type 2 optimization
 
 #### Testing / debugging functions
 def revert_solution():
@@ -98,7 +96,7 @@ def send_command(cmd: str):
 
 def parse_solution(solution_string):
     # solution for robot based on cubotino solver. we just use the unoptimized moves (in robot dict)
-    robot, moves, robot_tot_moves, opt = cs.robot_required_moves(solution_string, '', True, False)
+    robot, moves, robot_tot_moves, opt = cs.robot_required_moves(solution_string, '', True, DEBUG)
     # debug_print(robot, moves, robot_tot_moves, opt)
     arduino_steps = []
 
