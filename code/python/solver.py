@@ -15,6 +15,8 @@ SOLVE_TIMEOUT = 2 # how long to spend running the solve algorithm (seconds)
 SERIAL_PORT = ""
 SERIAL_BAUDRATE = 9600
 
+## String representation of cube. Since we won't implement scanning, we just hardcode it here.
+## See here for description of string representation: https://github.com/hkociemba/RubiksCube-TwophaseSolver
 CUBE_STRING = "".join([
 "DUDFUUBUU",    ## UP       WHITE
 "LBLDRBUFF"     ## RIGHT    ORANGE     
@@ -28,8 +30,6 @@ ser = serial.Serial(port=SERIAL_PORT, baudrate=SERIAL_BAUDRATE)
 
 #######################################
 ## Demo on a randomly generated cube
-## cube_string is a string representing the cube. this is what we should hardcode if we enter cube config manually
-## see here for description of string representation: https://github.com/hkociemba/RubiksCube-TwophaseSolver
 # cube = cubie.CubieCube()
 # cube.randomize()
 # fc = cube.to_facelet_cube()

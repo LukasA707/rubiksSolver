@@ -1,34 +1,31 @@
 #include "stepper.h"
 #include "servo.h"
 
-// Define command types
+// Define command API available to algorithm 
+// Note that clockwise means from the perspective of the bottom face,
+// i.e. the opposite of what you would expect if you sit facing the front face of the cube
 enum Command {
   CMD_NONE,
-  CMD_LEFT,
-  CMD_RIGHT,
-  CMD_PUSH,
-  CMD_HALF
+  CMD_SPIN_CW,    // Spins entire cube 90 deg clockwise
+  CMD_SPIN_CCW,   // Spins entire cube 90 deg counter-clockwise
+  CMD_SPIN_FULL,  // Spins entire cube 180 deg
+  CMD_TURN_CW,    // Turn bottom layer 90 deg clockwise
+  CMD_TURN_CCW,   // Turns bottom layer 90 deg counter-clockwise
+  CMD_TURN_FULL,  // Turns bottom layer 180 deg
+  CMD_FLIP        // Flip cube (front face becomes bottom face)
 };
 
 // Convert String to enum
 Command parseCommand(String cmd) {
   cmd.trim();
 
-  if (cmd == "left") return CMD_LEFT;
-  if (cmd == "right") return CMD_RIGHT;
-  if (cmd == "push") return CMD_PUSH;
-  if (cmd == "half") return CMD_HALF;
-
-  // COMMANDS NEEDED BY ALGORITHM (API)
-  // Note that clockwise means from the perspective of the bottom face,
-  // i.e. the opposite of what you would expect if you sit facing the front face of the cube
-  // if (cmd == "spin_cw_half") // Spins entire cube 90 deg clockwise
-  // if (cmd == "spin_ccw_half") // Spins entire cube 90 deg counter-clockwise
-  // if (cmd == "spin_full") // Spins entire cube 180 deg
-  // if (cmd == "turn_cw_half") // Turn bottom layer 90 deg clockwise
-  // if (cmd == "turn_ccw__half") // Turns bottom layer 90 deg counter-clockwise
-  // if (cmd == "turn_full") // Turns bottom layer 180 deg
-  // if (cmd == "flip") // Flip cube (front face becomes bottom face)
+  if (cmd == "spin_cw_half") return CMD_SPIN_CW;    
+  if (cmd == "spin_ccw_half") return CMD_SPIN_CCW;  
+  if (cmd == "spin_full") return CMD_SPIN_FULL;     
+  if (cmd == "turn_cw_half") return CMD_TURN_CW;    
+  if (cmd == "turn_ccw__half") return CMD_TURN_CCW; 
+  if (cmd == "turn_full") return CMD_TURN_FULL;     
+  if (cmd == "flip") return CMD_FLIP;               
 
   return CMD_NONE;
 }
@@ -48,6 +45,7 @@ void setup() {
 }
 
 void loop() {
+  // For the first MVP we could add a blocker here, that blocks until some button is pressed, in case we need manual intervention?
   delay(100);
 
   while (Serial.available() == 0) {}
@@ -55,21 +53,23 @@ void loop() {
   String command = Serial.readString();
 
   switch(parseCommand(command)) {
-    case CMD_RIGHT:
+    // TODO: What is left / right in this context?
+    case CMD_SPIN_CW:
       executeCommand(command, stepRight);
       break;
-    case CMD_LEFT:
+    case CMD_SPIN_CCW:
       executeCommand(command, stepLeft);
       break;
-
-    case CMD_HALF:
+    case CMD_SPIN_FULL:
       executeCommand(command, stepHalfRevolution);
+    case CMD_TURN_CW:
+    case CMD_TURN_CCW:
+    case CMD_TURN_FULL:
+      Serial.println("Command not implemented: " + command);
       break;
-
-    case CMD_PUSH:
+    case CMD_FLIP:    
       executeCommand(command, servoPush);
-      break;
-
+      break;  
     case CMD_NONE:
     default:
       Serial.println("Invalid command: " + command);
