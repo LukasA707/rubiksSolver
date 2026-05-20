@@ -40,6 +40,7 @@ void executeCommand(String command, void (*f)()) {
 void setup() {
   Serial.begin(9600);
   initStepper();
+  initButton();
   // TODO: Correct pins for sensors and note which belong where
   Sensor s0 = Sensor(5);
   Sensor s1 = Sensor(6);
