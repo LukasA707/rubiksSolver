@@ -1,5 +1,6 @@
 #include "stepper.h"
 #include "servo.h"
+#include "sensor.h"
 
 // Define command API available to algorithm 
 // Note that clockwise means from the perspective of the bottom face,
@@ -39,6 +40,11 @@ void executeCommand(String command, void (*f)()) {
 void setup() {
   Serial.begin(9600);
   initStepper();
+  // TODO: Correct pins for sensors and note which belong where
+  Sensor s0 = Sensor(5);
+  Sensor s1 = Sensor(6);
+  Sensor s2 = Sensor(7);
+  Sensor s3 = Sensor(8);
   //initSolenoid();
   initServo();
   Serial.println("Ready for commands");

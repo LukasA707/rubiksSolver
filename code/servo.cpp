@@ -10,7 +10,8 @@ void initServo() {
 }
 
 void servoPush() {
-    pushServo.write();
+    // TODO: Correct write values instead of 0?
+    pushServo.write(0);
     delay(500);
     pushServo.write(0);   
     delay(50);
